@@ -16,6 +16,14 @@ ANTHROPIC_VERSION = "2023-06-01"
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 CODE_EXECUTION_TOOL = "code_execution_20260521"
 
+# IDs of the hooks and data store created in the Make account (team "My Team", zone us2).
+# Set them to None to build a generic blueprint that asks for them after import.
+HOOK_IDS = {"inbox": 2888534, "publisher": 2888535, "docreader": 2888536}
+HOOK_URLS = {"publisher": "https://hook.us2.make.com/cly1wbg5le23xh8lv5j8cfnqytxylogy",
+             "docreader": "https://hook.us2.make.com/vjsmj0c3olb55n1fowwps4smbnbhhq9o"}
+# One data store holds client records (key = phone) and approval records (key = forwarded message id).
+DATASTORE_ID = 163597
+
 # WhatsApp webhook message (first message of the first change)
 V = "1.entry[1].changes[1].value"
 MSG = V + ".messages[1]"
@@ -65,22 +73,21 @@ def router(mid, name, xy, routes):
     }
 
 
-def webhook(name):
+def webhook(name, hook):
     return module(1, "gateway:CustomWebHook", 1, {}, name, (0, 0),
-                  parameters={"hook": None, "maxResults": 1})
+                  parameters={"hook": HOOK_IDS.get(hook), "maxResults": 1})
 
 
 def respond(mid, name, xy, body, filt=None, content_type="text/plain; charset=utf-8"):
     return module(mid, "gateway:WebhookRespond", 1,
-                  {"status": "200", "body": body,
+                  {"status": 200, "body": body,
                    "headers": [{"key": "Content-Type", "value": content_type}]},
                   name, xy, filt=filt)
 
 
 def set_vars(mid, name, xy, variables, filt=None):
     return module(mid, "util:SetVariables", 1,
-                  {"variables": [{"name": k, "value": v} for k, v in variables],
-                   "scope": "roundtrip"},
+                  {"variables": [{"name": k, "value": v} for k, v in variables]},
                   name, xy, filt=filt)
 
 
@@ -92,7 +99,7 @@ def to_json(mid, name, xy, text, filt=None):
 
 def parse_json(mid, name, xy, expr, filt=None):
     return module(mid, "json:ParseJSON", 1, {"json": expr}, name, xy,
-                  parameters={"type": ""}, filt=filt)
+                  parameters={}, filt=filt)
 
 
 def http(mid, name, xy, url, method="get", headers=(), qs=(), raw=None, form=None,
@@ -105,7 +112,7 @@ def http(mid, name, xy, url, method="get", headers=(), qs=(), raw=None, form=Non
         "parseResponse": parse,
         "authUser": auth[0] if auth else "",
         "authPass": auth[1] if auth else "",
-        "timeout": "300",
+        "timeout": 300,
         "shareCookies": False,
         "ca": "",
         "rejectUnauthorized": True,
@@ -134,37 +141,23 @@ def http(mid, name, xy, url, method="get", headers=(), qs=(), raw=None, form=Non
 
 
 def get_file(mid, name, xy, url, headers=()):
-    return module(mid, "http:ActionGetFile", 3, {
-        "url": url,
-        "method": "get",
-        "headers": [{"name": k, "value": v} for k, v in headers],
-        "qs": [],
-        "shareCookies": False,
-        "ca": "",
-        "rejectUnauthorized": True,
-        "followRedirect": True,
-        "useQuerystring": False,
-        "gzip": True,
-        "useMtls": False,
-        "serializeUrl": False,
-        "timeout": "300",
-        "followAllRedirects": False,
-    }, name, xy, parameters={"handleErrors": False, "useNewZLibDeCompress": True})
+    """Downloads binary data -> {{mid.data}}. (http:ActionGetFile cannot send the auth header.)"""
+    return http(mid, name, xy, url, "get", headers=headers, parse=False)
 
 
 def ds_get(mid, name, xy, key, filt=None):
     return module(mid, "datastore:GetRecord", 1, {"key": key, "returnWrapped": False}, name, xy,
-                  parameters={"datastore": None}, filt=filt)
+                  parameters={"datastore": DATASTORE_ID}, filt=filt)
 
 
 def ds_add(mid, name, xy, key, data, filt=None):
     return module(mid, "datastore:AddRecord", 1, {"key": key, "overwrite": True, "data": data},
-                  name, xy, parameters={"datastore": None}, filt=filt)
+                  name, xy, parameters={"datastore": DATASTORE_ID}, filt=filt)
 
 
 def ds_delete(mid, name, xy, key, filt=None):
     return module(mid, "datastore:DeleteRecord", 1, {"key": key}, name, xy,
-                  parameters={"datastore": None}, filt=filt)
+                  parameters={"datastore": DATASTORE_ID}, filt=filt)
 
 
 def sheets_add_row(mid, name, xy, sheet, values, filt=None):
@@ -208,7 +201,8 @@ def json_body(obj, inserts):
     for placeholder, expr in inserts.items():
         quoted = json.dumps(placeholder)
         assert quoted in body, placeholder
-        body = body.replace(quoted, expr)
+        # spaces keep a mapping's closing braces apart from the JSON's own braces
+        body = body.replace(quoted, " " + expr + " ")
     return body
 
 
@@ -274,8 +268,8 @@ INBOX_CONFIG = [
     ("OWNER_NUMBER", "923001234567"),
     ("ANTHROPIC_API_KEY", "PASTE_ANTHROPIC_API_KEY"),
     ("MODEL", "claude-opus-5-5"),
-    ("PUBLISHER_URL", "PASTE_PUBLISHER_WEBHOOK_URL"),
-    ("DOCREADER_URL", "PASTE_DOCREADER_WEBHOOK_URL"),
+    ("PUBLISHER_URL", HOOK_URLS.get("publisher") or "PASTE_PUBLISHER_WEBHOOK_URL"),
+    ("DOCREADER_URL", HOOK_URLS.get("docreader") or "PASTE_DOCREADER_WEBHOOK_URL"),
     ("BUSINESS_NAME", "Apne business ka naam"),
     ("CURRENCY", "PKR"),
     ("PRICE_GENERAL", "500"),
@@ -569,7 +563,7 @@ def build_inbox():
         m["metadata"]["designer"]["x"] += 600
 
     flow = [
-        webhook("WhatsApp webhook"),
+        webhook("WhatsApp webhook", "inbox"),
         set_vars(2, "CONFIG (yahan apni values bharein)", (300, 0), INBOX_CONFIG),
         router(3, "Verify or message", (450, 0), [verify_route, messages_route]),
     ]
@@ -645,7 +639,7 @@ def build_publisher():
     ]
 
     flow = [
-        webhook("Publisher webhook"),
+        webhook("Publisher webhook", "publisher"),
         set_vars(2, "CONFIG (yahan apni values bharein)", (300, 0), PUBLISHER_CONFIG),
         sheets_find_site(3, "Find site in Websites sheet", (600, 0), "{{1.site}}"),
         router(4, "Publish or update", (900, 0), [publish_route, update_route]),
@@ -694,7 +688,7 @@ def build_docreader():
                                          C("{{1.text}}", "text:notcontain", "docs.google.com/document/d/")]])),
     ]
     flow = [
-        webhook("Doc reader webhook"),
+        webhook("Doc reader webhook", "docreader"),
         set_vars(2, "CONFIG (yahan apni values bharein)", (300, 0), DOCREADER_CONFIG),
         router(3, "File / Google Doc / nothing", (600, 0), [file_route, gdoc_route, nothing_route]),
     ]

@@ -6,7 +6,7 @@
       "module": "gateway:CustomWebHook",
       "version": 1,
       "parameters": {
-        "hook": null,
+        "hook": 2888536,
         "maxResults": 1
       },
       "mapper": {},
@@ -41,8 +41,7 @@
             "name": "MODEL",
             "value": "claude-opus-5-5"
           }
-        ],
-        "scope": "roundtrip"
+        ]
       },
       "metadata": {
         "designer": {
@@ -88,7 +87,7 @@
                 "parseResponse": true,
                 "authUser": "",
                 "authPass": "",
-                "timeout": "300",
+                "timeout": 300,
                 "shareCookies": false,
                 "ca": "",
                 "rejectUnauthorized": true,
@@ -121,7 +120,7 @@
             },
             {
               "id": 5,
-              "module": "http:ActionGetFile",
+              "module": "http:ActionSendData",
               "version": 3,
               "parameters": {
                 "handleErrors": false,
@@ -137,6 +136,10 @@
                   }
                 ],
                 "qs": [],
+                "parseResponse": false,
+                "authUser": "",
+                "authPass": "",
+                "timeout": 300,
                 "shareCookies": false,
                 "ca": "",
                 "rejectUnauthorized": true,
@@ -145,7 +148,6 @@
                 "gzip": true,
                 "useMtls": false,
                 "serializeUrl": false,
-                "timeout": "300",
                 "followAllRedirects": false
               },
               "metadata": {
@@ -181,7 +183,7 @@
                 "parseResponse": true,
                 "authUser": "",
                 "authPass": "",
-                "timeout": "300",
+                "timeout": 300,
                 "shareCookies": false,
                 "ca": "",
                 "rejectUnauthorized": true,
@@ -238,7 +240,7 @@
                 "parseResponse": true,
                 "authUser": "",
                 "authPass": "",
-                "timeout": "300",
+                "timeout": 300,
                 "shareCookies": false,
                 "ca": "",
                 "rejectUnauthorized": true,
@@ -250,7 +252,7 @@
                 "followAllRedirects": false,
                 "bodyType": "raw",
                 "contentType": "application/json",
-                "data": "{\"model\": \"{{2.MODEL}}\", \"max_tokens\": 16000, \"fallbacks\": \"default\", \"output_config\": {\"effort\": \"low\"}, \"tools\": [{\"type\": \"code_execution_20260521\", \"name\": \"code_execution\"}], \"messages\": [{\"role\": \"user\", \"content\": [{\"type\": \"text\", \"text\": \"A client sent an article file on WhatsApp. The file has been uploaded into your code execution container (find it with: find / -type f -mmin -30 \\\\( -iname '*.docx' -o -iname '*.doc' -o -iname '*.pdf' -o -iname '*.txt' -o -iname '*.odt' -o -iname '*.rtf' \\\\) 2>/dev/null | grep -v -e '^/proc' -e '^/sys' -e '^/usr' | head).\\n\\nUse code to read it:\\n- .docx: read word/document.xml and word/_rels/document.xml.rels with zipfile (or python-docx) so that every hyperlink keeps its exact URL and anchor text.\\n- .pdf: pypdf (keep link annotations' URLs).\\n- .txt / other text: read as UTF-8.\\n\\nThen answer with ONLY the article as simple HTML, nothing else:\\n<h1> for the title, <h2>/<h3> for subheadings, <p>, <ul>/<ol>/<li>, <strong>, <em>, and <a href=\\\"URL\\\">anchor</a> for every link.\\nDo not correct, rewrite, shorten or comment on anything. Skip images.\\nIf the file cannot be read or is not an article, answer exactly: UNREADABLE_FILE\"}, {\"type\": \"container_upload\", \"file_id\": \"{{6.data.id}}\"}]}]}"
+                "data": "{\"model\":  \"{{2.MODEL}}\" , \"max_tokens\": 16000, \"fallbacks\": \"default\", \"output_config\": {\"effort\": \"low\"}, \"tools\": [{\"type\": \"code_execution_20260521\", \"name\": \"code_execution\"}], \"messages\": [{\"role\": \"user\", \"content\": [{\"type\": \"text\", \"text\": \"A client sent an article file on WhatsApp. The file has been uploaded into your code execution container (find it with: find / -type f -mmin -30 \\\\( -iname '*.docx' -o -iname '*.doc' -o -iname '*.pdf' -o -iname '*.txt' -o -iname '*.odt' -o -iname '*.rtf' \\\\) 2>/dev/null | grep -v -e '^/proc' -e '^/sys' -e '^/usr' | head).\\n\\nUse code to read it:\\n- .docx: read word/document.xml and word/_rels/document.xml.rels with zipfile (or python-docx) so that every hyperlink keeps its exact URL and anchor text.\\n- .pdf: pypdf (keep link annotations' URLs).\\n- .txt / other text: read as UTF-8.\\n\\nThen answer with ONLY the article as simple HTML, nothing else:\\n<h1> for the title, <h2>/<h3> for subheadings, <p>, <ul>/<ol>/<li>, <strong>, <em>, and <a href=\\\"URL\\\">anchor</a> for every link.\\nDo not correct, rewrite, shorten or comment on anything. Skip images.\\nIf the file cannot be read or is not an article, answer exactly: UNREADABLE_FILE\"}, {\"type\": \"container_upload\", \"file_id\":  \"{{6.data.id}}\" }]}]}"
               },
               "metadata": {
                 "designer": {
@@ -285,7 +287,7 @@
                 "parseResponse": true,
                 "authUser": "",
                 "authPass": "",
-                "timeout": "300",
+                "timeout": 300,
                 "shareCookies": false,
                 "ca": "",
                 "rejectUnauthorized": true,
@@ -310,7 +312,7 @@
               "version": 1,
               "parameters": {},
               "mapper": {
-                "status": "200",
+                "status": 200,
                 "body": "{{last(map(7.data.content; text; type; text))}}",
                 "headers": [
                   {
@@ -347,7 +349,7 @@
                 "parseResponse": false,
                 "authUser": "",
                 "authPass": "",
-                "timeout": "300",
+                "timeout": 300,
                 "shareCookies": false,
                 "ca": "",
                 "rejectUnauthorized": true,
@@ -389,7 +391,7 @@
               "version": 1,
               "parameters": {},
               "mapper": {
-                "status": "200",
+                "status": 200,
                 "body": "{{replace(10.data; /<style[^<]*<\\/style>/g; emptystring)}}",
                 "headers": [
                   {
@@ -416,7 +418,7 @@
               "version": 1,
               "parameters": {},
               "mapper": {
-                "status": "200",
+                "status": 200,
                 "body": "",
                 "headers": [
                   {

@@ -6,7 +6,7 @@
       "module": "gateway:CustomWebHook",
       "version": 1,
       "parameters": {
-        "hook": null,
+        "hook": 2888534,
         "maxResults": 1
       },
       "mapper": {},
@@ -55,11 +55,11 @@
           },
           {
             "name": "PUBLISHER_URL",
-            "value": "PASTE_PUBLISHER_WEBHOOK_URL"
+            "value": "https://hook.us2.make.com/cly1wbg5le23xh8lv5j8cfnqytxylogy"
           },
           {
             "name": "DOCREADER_URL",
-            "value": "PASTE_DOCREADER_WEBHOOK_URL"
+            "value": "https://hook.us2.make.com/vjsmj0c3olb55n1fowwps4smbnbhhq9o"
           },
           {
             "name": "BUSINESS_NAME",
@@ -101,8 +101,7 @@
             "name": "SITES_LIST_URL",
             "value": "Sites list ka public link (bina passwords wali sheet)"
           }
-        ],
-        "scope": "roundtrip"
+        ]
       },
       "metadata": {
         "designer": {
@@ -133,7 +132,7 @@
               "version": 1,
               "parameters": {},
               "mapper": {
-                "status": "200",
+                "status": 200,
                 "body": "{{1.`hub.challenge`}}",
                 "headers": [
                   {
@@ -177,7 +176,7 @@
               "version": 1,
               "parameters": {},
               "mapper": {
-                "status": "200",
+                "status": 200,
                 "body": "EVENT_RECEIVED",
                 "headers": [
                   {
@@ -253,8 +252,7 @@
                     "name": "context_id",
                     "value": "{{1.entry[1].changes[1].value.messages[1].context.id}}"
                   }
-                ],
-                "scope": "roundtrip"
+                ]
               },
               "metadata": {
                 "designer": {
@@ -284,7 +282,7 @@
                       "module": "datastore:GetRecord",
                       "version": 1,
                       "parameters": {
-                        "datastore": null
+                        "datastore": 163597
                       },
                       "mapper": {
                         "key": "{{ifempty(6.reacted_id; 6.context_id)}}",
@@ -391,7 +389,7 @@
                       "module": "datastore:DeleteRecord",
                       "version": 1,
                       "parameters": {
-                        "datastore": null
+                        "datastore": 163597
                       },
                       "mapper": {
                         "key": "{{ifempty(6.reacted_id; 6.context_id)}}"
@@ -421,7 +419,7 @@
                       "module": "datastore:GetRecord",
                       "version": 1,
                       "parameters": {
-                        "datastore": null
+                        "datastore": 163597
                       },
                       "mapper": {
                         "key": "{{8.client}}",
@@ -466,7 +464,7 @@
                                 "parseResponse": false,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -546,7 +544,7 @@
                               "module": "datastore:AddRecord",
                               "version": 1,
                               "parameters": {
-                                "datastore": null
+                                "datastore": 163597
                               },
                               "mapper": {
                                 "key": "{{8.client}}",
@@ -611,7 +609,7 @@
                                 "parseResponse": true,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -623,7 +621,7 @@
                                 "followAllRedirects": false,
                                 "bodyType": "raw",
                                 "contentType": "application/json",
-                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \"{{2.OWNER_NUMBER}}\", \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\": {{14.json}}} }"
+                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\":  \"{{2.OWNER_NUMBER}}\" , \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\":  {{14.json}} } }"
                               },
                               "metadata": {
                                 "designer": {
@@ -658,7 +656,7 @@
                                 "parseResponse": true,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -670,7 +668,7 @@
                                 "followAllRedirects": false,
                                 "bodyType": "raw",
                                 "contentType": "application/json",
-                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \"{{8.client}}\", \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\": \"✅ Aapki payment receive ho gayi hai. Shukriya! 🙏\"} }"
+                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\":  \"{{8.client}}\" , \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\":  \"✅ Aapki payment receive ho gayi hai. Shukriya! 🙏\" } }"
                               },
                               "metadata": {
                                 "designer": {
@@ -750,7 +748,7 @@
                                 "parseResponse": true,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -762,7 +760,7 @@
                                 "followAllRedirects": false,
                                 "bodyType": "raw",
                                 "contentType": "application/json",
-                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \"{{2.OWNER_NUMBER}}\", \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\": \"✅ Noted: payment Orders sheet me log kar di gayi.\"} }"
+                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\":  \"{{2.OWNER_NUMBER}}\" , \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\":  \"✅ Noted: payment Orders sheet me log kar di gayi.\" } }"
                               },
                               "metadata": {
                                 "designer": {
@@ -785,7 +783,7 @@
                       "module": "datastore:GetRecord",
                       "version": 1,
                       "parameters": {
-                        "datastore": null
+                        "datastore": 163597
                       },
                       "mapper": {
                         "key": "{{6.from}}",
@@ -837,7 +835,7 @@
                         "parseResponse": true,
                         "authUser": "",
                         "authPass": "",
-                        "timeout": "300",
+                        "timeout": 300,
                         "shareCookies": false,
                         "ca": "",
                         "rejectUnauthorized": true,
@@ -858,7 +856,7 @@
                     },
                     {
                       "id": 22,
-                      "module": "http:ActionGetFile",
+                      "module": "http:ActionSendData",
                       "version": 3,
                       "parameters": {
                         "handleErrors": false,
@@ -874,6 +872,10 @@
                           }
                         ],
                         "qs": [],
+                        "parseResponse": false,
+                        "authUser": "",
+                        "authPass": "",
+                        "timeout": 300,
                         "shareCookies": false,
                         "ca": "",
                         "rejectUnauthorized": true,
@@ -882,7 +884,6 @@
                         "gzip": true,
                         "useMtls": false,
                         "serializeUrl": false,
-                        "timeout": "300",
                         "followAllRedirects": false
                       },
                       "metadata": {
@@ -914,7 +915,7 @@
                         "parseResponse": true,
                         "authUser": "",
                         "authPass": "",
-                        "timeout": "300",
+                        "timeout": 300,
                         "shareCookies": false,
                         "ca": "",
                         "rejectUnauthorized": true,
@@ -991,7 +992,7 @@
                         "parseResponse": true,
                         "authUser": "",
                         "authPass": "",
-                        "timeout": "300",
+                        "timeout": 300,
                         "shareCookies": false,
                         "ca": "",
                         "rejectUnauthorized": true,
@@ -1003,7 +1004,7 @@
                         "followAllRedirects": false,
                         "bodyType": "raw",
                         "contentType": "application/json",
-                        "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \"{{2.OWNER_NUMBER}}\", \"type\": \"image\", \"image\": {\"id\": \"{{23.data.id}}\", \"caption\": {{24.json}}} }"
+                        "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\":  \"{{2.OWNER_NUMBER}}\" , \"type\": \"image\", \"image\": {\"id\":  \"{{23.data.id}}\" , \"caption\":  {{24.json}} } }"
                       },
                       "metadata": {
                         "designer": {
@@ -1018,7 +1019,7 @@
                       "module": "datastore:AddRecord",
                       "version": 1,
                       "parameters": {
-                        "datastore": null
+                        "datastore": 163597
                       },
                       "mapper": {
                         "key": "{{25.data.messages[1].id}}",
@@ -1056,7 +1057,7 @@
                         "parseResponse": true,
                         "authUser": "",
                         "authPass": "",
-                        "timeout": "300",
+                        "timeout": 300,
                         "shareCookies": false,
                         "ca": "",
                         "rejectUnauthorized": true,
@@ -1068,7 +1069,7 @@
                         "followAllRedirects": false,
                         "bodyType": "raw",
                         "contentType": "application/json",
-                        "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \"{{6.from}}\", \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\": \"Shukriya! 🙏 Payment screenshot mil gaya hai. Verify hote hi aapko update kar denge.\"} }"
+                        "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\":  \"{{6.from}}\" , \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\":  \"Shukriya! 🙏 Payment screenshot mil gaya hai. Verify hote hi aapko update kar denge.\" } }"
                       },
                       "metadata": {
                         "designer": {
@@ -1087,7 +1088,7 @@
                       "module": "datastore:GetRecord",
                       "version": 1,
                       "parameters": {
-                        "datastore": null
+                        "datastore": 163597
                       },
                       "mapper": {
                         "key": "{{6.from}}",
@@ -1146,7 +1147,7 @@
                         "parseResponse": false,
                         "authUser": "",
                         "authPass": "",
-                        "timeout": "300",
+                        "timeout": 300,
                         "shareCookies": false,
                         "ca": "",
                         "rejectUnauthorized": true,
@@ -1257,7 +1258,7 @@
                         "parseResponse": true,
                         "authUser": "",
                         "authPass": "",
-                        "timeout": "300",
+                        "timeout": 300,
                         "shareCookies": false,
                         "ca": "",
                         "rejectUnauthorized": true,
@@ -1269,7 +1270,7 @@
                         "followAllRedirects": false,
                         "bodyType": "raw",
                         "contentType": "application/json",
-                        "data": "{\"model\": \"{{2.MODEL}}\", \"max_tokens\": 16000, \"fallbacks\": \"default\", \"output_config\": {\"effort\": \"medium\", \"format\": {\"type\": \"json_schema\", \"schema\": {\"type\": \"object\", \"properties\": {\"action\": {\"type\": \"string\", \"enum\": [\"reply\", \"save_draft\", \"publish\", \"request_payment\", \"update_post\", \"notify_owner\", \"reject\"]}, \"reply\": {\"type\": \"string\"}, \"site\": {\"type\": \"string\"}, \"category\": {\"type\": \"string\", \"enum\": [\"none\", \"general\", \"cbd\", \"casino\", \"forbidden\"]}, \"price\": {\"type\": \"integer\"}, \"advance\": {\"type\": \"integer\"}, \"article_title\": {\"type\": \"string\"}, \"article_html\": {\"type\": \"string\"}, \"fixes\": {\"type\": \"string\"}, \"pending_status\": {\"type\": \"string\", \"enum\": [\"\", \"need_site\", \"awaiting_payment\"]}, \"clear_pending\": {\"type\": \"boolean\"}, \"post_url\": {\"type\": \"string\"}, \"update_instructions\": {\"type\": \"string\"}, \"owner_note\": {\"type\": \"string\"} }, \"required\": [\"action\", \"reply\", \"site\", \"category\", \"price\", \"advance\", \"article_title\", \"article_html\", \"fixes\", \"pending_status\", \"clear_pending\", \"post_url\", \"update_instructions\", \"owner_note\"], \"additionalProperties\": false} } }, \"system\": [{\"type\": \"text\", \"text\": {{32.json}}, \"cache_control\": {\"type\": \"ephemeral\"} }], \"messages\": [{\"role\": \"user\", \"content\": {{33.json}}}]}"
+                        "data": "{\"model\":  \"{{2.MODEL}}\" , \"max_tokens\": 16000, \"fallbacks\": \"default\", \"output_config\": {\"effort\": \"medium\", \"format\": {\"type\": \"json_schema\", \"schema\": {\"type\": \"object\", \"properties\": {\"action\": {\"type\": \"string\", \"enum\": [\"reply\", \"save_draft\", \"publish\", \"request_payment\", \"update_post\", \"notify_owner\", \"reject\"]}, \"reply\": {\"type\": \"string\"}, \"site\": {\"type\": \"string\"}, \"category\": {\"type\": \"string\", \"enum\": [\"none\", \"general\", \"cbd\", \"casino\", \"forbidden\"]}, \"price\": {\"type\": \"integer\"}, \"advance\": {\"type\": \"integer\"}, \"article_title\": {\"type\": \"string\"}, \"article_html\": {\"type\": \"string\"}, \"fixes\": {\"type\": \"string\"}, \"pending_status\": {\"type\": \"string\", \"enum\": [\"\", \"need_site\", \"awaiting_payment\"]}, \"clear_pending\": {\"type\": \"boolean\"}, \"post_url\": {\"type\": \"string\"}, \"update_instructions\": {\"type\": \"string\"}, \"owner_note\": {\"type\": \"string\"} }, \"required\": [\"action\", \"reply\", \"site\", \"category\", \"price\", \"advance\", \"article_title\", \"article_html\", \"fixes\", \"pending_status\", \"clear_pending\", \"post_url\", \"update_instructions\", \"owner_note\"], \"additionalProperties\": false} } }, \"system\": [{\"type\": \"text\", \"text\":  {{32.json}} , \"cache_control\": {\"type\": \"ephemeral\"} }], \"messages\": [{\"role\": \"user\", \"content\":  {{33.json}} }]}"
                       },
                       "metadata": {
                         "designer": {
@@ -1283,9 +1284,7 @@
                       "id": 35,
                       "module": "json:ParseJSON",
                       "version": 1,
-                      "parameters": {
-                        "type": ""
-                      },
+                      "parameters": {},
                       "mapper": {
                         "json": "{{last(map(34.data.content; text; type; text))}}"
                       },
@@ -1316,8 +1315,7 @@
                             "name": "h_full",
                             "value": "{{30.history}}\nClient: {{substring(6.text; 0; 500)}} {{6.filename}}\nAgent: {{35.reply}}"
                           }
-                        ],
-                        "scope": "roundtrip"
+                        ]
                       },
                       "metadata": {
                         "designer": {
@@ -1332,7 +1330,7 @@
                       "module": "datastore:AddRecord",
                       "version": 1,
                       "parameters": {
-                        "datastore": null
+                        "datastore": 163597
                       },
                       "mapper": {
                         "key": "{{6.from}}",
@@ -1412,7 +1410,7 @@
                                 "parseResponse": true,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -1424,7 +1422,7 @@
                                 "followAllRedirects": false,
                                 "bodyType": "raw",
                                 "contentType": "application/json",
-                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \"{{6.from}}\", \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\": {{39.json}}} }"
+                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\":  \"{{6.from}}\" , \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\":  {{39.json}} } }"
                               },
                               "metadata": {
                                 "designer": {
@@ -1454,7 +1452,7 @@
                                 "parseResponse": false,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -1585,7 +1583,7 @@
                                 "parseResponse": true,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -1597,7 +1595,7 @@
                                 "followAllRedirects": false,
                                 "bodyType": "raw",
                                 "contentType": "application/json",
-                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \"{{2.OWNER_NUMBER}}\", \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\": {{42.json}}} }"
+                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\":  \"{{2.OWNER_NUMBER}}\" , \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\":  {{42.json}} } }"
                               },
                               "metadata": {
                                 "designer": {
@@ -1627,7 +1625,7 @@
                                 "parseResponse": false,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -1736,7 +1734,7 @@
                                 "parseResponse": true,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -1748,7 +1746,7 @@
                                 "followAllRedirects": false,
                                 "bodyType": "raw",
                                 "contentType": "application/json",
-                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \"{{2.OWNER_NUMBER}}\", \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\": {{45.json}}} }"
+                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\":  \"{{2.OWNER_NUMBER}}\" , \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\":  {{45.json}} } }"
                               },
                               "metadata": {
                                 "designer": {
@@ -1813,7 +1811,7 @@
                                 "parseResponse": true,
                                 "authUser": "",
                                 "authPass": "",
-                                "timeout": "300",
+                                "timeout": 300,
                                 "shareCookies": false,
                                 "ca": "",
                                 "rejectUnauthorized": true,
@@ -1825,7 +1823,7 @@
                                 "followAllRedirects": false,
                                 "bodyType": "raw",
                                 "contentType": "application/json",
-                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \"{{2.OWNER_NUMBER}}\", \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\": {{47.json}}} }"
+                                "data": "{\"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\":  \"{{2.OWNER_NUMBER}}\" , \"type\": \"text\", \"text\": {\"preview_url\": true, \"body\":  {{47.json}} } }"
                               },
                               "metadata": {
                                 "designer": {
